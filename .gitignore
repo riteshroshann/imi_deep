@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data and results
+data_dir/
+data/raw/
+data/processed/
+results/
+outputs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
+.env
+
+# OS
+.DS_Store
+Thumbs.db
