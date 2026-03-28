@@ -102,3 +102,540 @@ features
 20:37:39 \u2502 src.feature_extraction 
 \u2502 INFO  \u2502   Extracting DWT 
 features (db4, 5 levels)...
+20:40:26 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502     -> 576 DWT 
+features
+20:40:26 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502   Extracting 
+signal features...
+20:40:31 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502     -> 160 signal 
+features
+20:40:31 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502   Extracting 
+cross-correlation features...
+20:40:39 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502     -> 72 xcorr 
+features
+20:40:39 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502   Computing Damage 
+Index...
+20:40:45 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502     -> 16 DI 
+features
+20:40:45 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502   Adding strain 
+features...
+20:40:45 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502     -> 3 strain 
+features
+20:40:45 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502 Feature matrix: 
+(3196, 947) | Names: 947
+20:40:45 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Computing Damage 
+Index...
+20:40:50 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Computing UMAP 
+embeddings...
+C:\Users\rites\AppData\Roaming\Python\P
+ython310\site-packages\umap\umap_.py:19
+52: UserWarning: n_jobs value 1 
+overridden to 1 by setting 
+random_state. Use no seed for 
+parallelism.
+  warn(
+20:41:13 \u2502 src.data_loader        
+\u2502 INFO  \u2502 Split sizes ù 
+Train: 1917 | Val: 639 | Test: 640
+20:41:14 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Stage 1 complete: 
+3196 samples, 947 features
+20:41:14 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+20:41:14 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 STAGE 2: Baseline 
+Models
+20:41:14 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+20:41:14 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Training Linear 
+Regression...
+20:41:14 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   LinReg RMSE: 
+0.0077
+20:41:14 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Training Random 
+Forest...
+20:41:28 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   RF RMSE: 0.0105
+20:41:28 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Training XGBoost...
+20:41:38 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   XGBoost RMSE: 
+0.0107
+20:41:41 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   LightGBM RMSE: 
+0.0104
+20:41:41 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Saved metrics 
+\u2192 
+results/tables/baseline_metrics.csv
+20:41:41 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+20:41:41 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 STAGE 3: Deep 
+Learning Models
+20:41:41 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+20:41:41 \u2502 src.data_loader        
+\u2502 INFO  \u2502 Split sizes ù 
+Train: 1917 | Val: 639 | Test: 640
+20:41:41 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Training CNN1D 
+(187553 params)...
+C:\Users\rites\AppData\Roaming\Python\P
+ython310\site-packages\torch\utils\data
+\dataloader.py:668: UserWarning: 
+'pin_memory' argument is set as true 
+but no accelerator is found, then 
+device pinned memory won't be used.
+  warnings.warn(warn_msg)
+20:42:40 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  20 | 
+train=0.0041 | val=0.0248
+20:45:02 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  40 | 
+train=0.0025 | val=0.0089
+20:46:05 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  60 | 
+train=0.0017 | val=0.0104
+20:47:05 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  80 | 
+train=0.0017 | val=0.0091
+20:47:06 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   CNN1D 
+RMSE=0.0890 R▓=0.870 (324.4s)
+20:47:06 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Training BiLSTM 
+(630881 params)...
+20:50:37 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  20 | 
+train=0.0021 | val=0.0005
+20:54:09 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  40 | 
+train=0.0016 | val=0.0002
+20:57:44 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  60 | 
+train=0.0011 | val=0.0002
+21:01:21 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  80 | 
+train=0.0009 | val=0.0000
+21:01:21 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   BiLSTM 
+RMSE=0.0058 R▓=0.999 (855.2s)
+21:01:21 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Training TCN 
+(231233 params)...
+21:10:11 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  20 | 
+train=0.0016 | val=0.0029
+21:18:55 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  40 | 
+train=0.0011 | val=0.0013
+21:27:39 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  60 | 
+train=0.0009 | val=0.0010
+21:36:27 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  80 | 
+train=0.0009 | val=0.0013
+21:36:32 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   TCN RMSE=0.0245 
+R▓=0.990 (2105.4s)
+21:36:32 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Training 
+Transformer (435329 params)...
+21:41:37 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  20 | 
+train=0.0037 | val=0.0271
+21:44:24 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  40 | 
+train=0.0024 | val=0.0033
+21:50:46 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  60 | 
+train=0.0013 | val=0.0003
+21:54:23 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  80 | 
+train=0.0012 | val=0.0002
+21:54:25 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Transformer 
+RMSE=0.0127 R▓=0.997 (1070.6s)
+21:54:25 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Saved metrics 
+\u2192 results/tables/deep_learning_met
+rics.csv
+21:54:25 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+21:54:25 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 STAGE 4: 
+Physics-Informed Neural Network
+21:54:25 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+21:54:25 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Training PINN 
+(153732 params)...
+21:54:44 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch  50 | 
+total=0.0125 | data=0.0116 | 
+physics=0.0369
+21:54:59 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch 100 | 
+total=0.0051 | data=0.0033 | 
+physics=0.0459
+21:55:03 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch 150 | 
+total=0.0043 | data=0.0027 | 
+physics=0.0285
+21:55:41 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch 200 | 
+total=0.0029 | data=0.0020 | 
+physics=0.0124
+21:56:34 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch 250 | 
+total=0.0021 | data=0.0016 | 
+physics=0.0057
+21:56:54 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Epoch 300 | 
+total=0.0021 | data=0.0016 | 
+physics=0.0053
+21:56:54 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   PINN Stiffness 
+RMSE=0.0312 | Strength RMSE=0.0107
+21:56:54 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+21:56:54 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 STAGE 5: 
+Uncertainty Quantification
+21:56:54 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+C:\Users\rites\AppData\Roaming\Python\P
+ython310\site-packages\torch\utils\data
+\dataloader.py:668: UserWarning: 
+'pin_memory' argument is set as true 
+but no accelerator is found, then 
+device pinned memory won't be used.
+  warnings.warn(warn_msg)
+21:56:54 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 MC Dropout for 
+CNN1D...
+21:57:20 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 MC Dropout for 
+Transformer...
+21:58:23 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Conformal 
+Prediction calibration...
+21:58:23 \u2502 src.uncertainty        
+\u2502 INFO  \u2502 Conformal 
+calibration: n=320, \u03b1=0.100, 
+quantile=0.0086
+21:58:23 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Conformal 
+coverage: 0.897 (target 0.90)
+21:58:23 \u2502 src.uncertainty        
+\u2502 INFO  \u2502 Conformal 
+calibration: n=320, \u03b1=0.500, 
+quantile=0.0030
+21:58:23 \u2502 src.uncertainty        
+\u2502 INFO  \u2502 Conformal 
+calibration: n=320, \u03b1=0.400, 
+quantile=0.0040
+21:58:23 \u2502 src.uncertainty        
+\u2502 INFO  \u2502 Conformal 
+calibration: n=320, \u03b1=0.300, 
+quantile=0.0049
+21:58:23 \u2502 src.uncertainty        
+\u2502 INFO  \u2502 Conformal 
+calibration: n=320, \u03b1=0.250, 
+quantile=0.0056
+21:58:23 \u2502 src.uncertainty        
+\u2502 INFO  \u2502 Conformal 
+calibration: n=320, \u03b1=0.200, 
+quantile=0.0064
+21:58:23 \u2502 src.uncertainty        
+\u2502 INFO  \u2502 Conformal 
+calibration: n=320, \u03b1=0.150, 
+quantile=0.0075
+21:58:23 \u2502 src.uncertainty        
+\u2502 INFO  \u2502 Conformal 
+calibration: n=320, \u03b1=0.100, 
+quantile=0.0086
+21:58:23 \u2502 src.uncertainty        
+\u2502 INFO  \u2502 Conformal 
+calibration: n=320, \u03b1=0.050, 
+quantile=0.0100
+21:58:23 \u2502 src.uncertainty        
+\u2502 INFO  \u2502 Conformal 
+calibration: n=320, \u03b1=0.030, 
+quantile=0.0127
+21:58:23 \u2502 src.uncertainty        
+\u2502 INFO  \u2502 Conformal 
+calibration: n=320, \u03b1=0.010, 
+quantile=0.0155
+21:58:23 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+21:58:23 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 STAGE 6: 
+Explainability (XAI)
+21:58:23 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+21:58:23 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Computing SHAP for 
+XGBoost...
+21:58:23 \u2502 src.explainability     
+\u2502 WARNING \u2502 SHAP not 
+installed. Generating approximate 
+values.
+21:58:24 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502   Top-5: 
+[('DWT_s3_D1_energy', 
+0.09498055279254913), ('Sig_s13_rms', 
+0.017977721989154816), 
+('DWT_s15_D1_energy', 
+0.016971632838249207), ('Sig_s11_rms', 
+0.01170850358903408), 
+('DWT_s0_D1_energy', 
+0.010720206424593925)]
+21:58:24 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Computing 
+Grad-CAM...
+21:58:24 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Extracting 
+attention weights...
+21:58:25 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+21:58:25 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 STAGE 7: Bayesian 
+Optimization for Layup Design
+21:58:25 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+21:58:25 \u2502 src.optimization       
+\u2502 INFO  \u2502 Initializing with 
+15 random designs...
+Traceback (most recent call last):
+  File "C:\Users\rites\.gemini\antigrav
+ity\scratch\nasa_dl-imi_cw\main.py", 
+line 903, in <module>
+    main()
+  File "C:\Users\rites\.gemini\antigrav
+ity\scratch\nasa_dl-imi_cw\main.py", 
+line 864, in main
+    opt_res = 
+stage_optimization(dl_res)
+  File "C:\Users\rites\.gemini\antigrav
+ity\scratch\nasa_dl-imi_cw\main.py", 
+line 594, in stage_optimization
+    results = 
+optimizer.optimize(n_iterations=30)
+  File "C:\Users\rites\.gemini\antigrav
+ity\scratch\nasa_dl-imi_cw\src\optimiza
+tion.py", line 367, in optimize
+    self.initialize()
+  File "C:\Users\rites\.gemini\antigrav
+ity\scratch\nasa_dl-imi_cw\src\optimiza
+tion.py", line 324, in initialize
+    self._evaluate_and_store(x)
+  File "C:\Users\rites\.gemini\antigrav
+ity\scratch\nasa_dl-imi_cw\src\optimiza
+tion.py", line 354, in 
+_evaluate_and_store
+    y = fn(x)
+  File "C:\Users\rites\.gemini\antigrav
+ity\scratch\nasa_dl-imi_cw\src\optimiza
+tion.py", line 579, in predict_rul
+    return float(rul_model(feat_tensor)
+.cpu().item())
+  File "C:\Users\rites\AppData\Roaming\
+Python\Python310\site-packages\torch\nn
+\modules\module.py", line 1775, in 
+_wrapped_call_impl
+    return self._call_impl(*args, 
+**kwargs)
+  File "C:\Users\rites\AppData\Roaming\
+Python\Python310\site-packages\torch\nn
+\modules\module.py", line 1786, in 
+_call_impl
+    return forward_call(*args, 
+**kwargs)
+  File "C:\Users\rites\.gemini\antigrav
+ity\scratch\nasa_dl-imi_cw\src\models\c
+nn1d.py", line 141, in forward
+    features = self.conv_blocks(x)  # 
+(B, 256, T')
+  File "C:\Users\rites\AppData\Roaming\
+Python\Python310\site-packages\torch\nn
+\modules\module.py", line 1775, in 
+_wrapped_call_impl
+    return self._call_impl(*args, 
+**kwargs)
+  File "C:\Users\rites\AppData\Roaming\
+Python\Python310\site-packages\torch\nn
+\modules\module.py", line 1786, in 
+_call_impl
+    return forward_call(*args, 
+**kwargs)
+  File "C:\Users\rites\AppData\Roaming\
+Python\Python310\site-packages\torch\nn
+\modules\container.py", line 250, in 
+forward
+    input = module(input)
+  File "C:\Users\rites\AppData\Roaming\
+Python\Python310\site-packages\torch\nn
+\modules\module.py", line 1775, in 
+_wrapped_call_impl
+    return self._call_impl(*args, 
+**kwargs)
+  File "C:\Users\rites\AppData\Roaming\
+Python\Python310\site-packages\torch\nn
+\modules\module.py", line 1786, in 
+_call_impl
+    return forward_call(*args, 
+**kwargs)
+  File "C:\Users\rites\.gemini\antigrav
+ity\scratch\nasa_dl-imi_cw\src\models\c
+nn1d.py", line 55, in forward
+    return self.drop(self.pool(self.act
+(self.bn(self.conv(x)))))
+  File "C:\Users\rites\AppData\Roaming\
+Python\Python310\site-packages\torch\nn
+\modules\module.py", line 1775, in 
+_wrapped_call_impl
+    return self._call_impl(*args, 
+**kwargs)
+  File "C:\Users\rites\AppData\Roaming\
+Python\Python310\site-packages\torch\nn
+\modules\module.py", line 1786, in 
+_call_impl
+    return forward_call(*args, 
+**kwargs)
+  File "C:\Users\rites\AppData\Roaming\
+Python\Python310\site-packages\torch\nn
+\modules\conv.py", line 371, in forward
+    return self._conv_forward(input, 
+self.weight, self.bias)
+  File "C:\Users\rites\AppData\Roaming\
+Python\Python310\site-packages\torch\nn
+\modules\conv.py", line 366, in 
+_conv_forward
+    return F.conv1d(
+RuntimeError: Given groups=1, weight 
+of size [32, 16, 7], expected input[1, 
+1, 13] to have 16 channels, but got 1 
+channels instead
