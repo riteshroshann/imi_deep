@@ -1,0 +1,104 @@
+﻿python : 20:37:09 \u2502 CFRP_Pipeline 
+         \u2502 INFO  \u2502 \u2554\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2557
+At line:1 char:1
++ python main.py --data_path ./data 
+--mode full_pipeline 2>&1 | Out-Fil ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (20:37:09 \u2502...550\u2550  
+  \u2557:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+20:37:09 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2551  AI-Driven 
+Property Optimization of CFRP 
+Composites    \u2551
+20:37:09 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2551  NASA PCoE 
+Dataset ù Full Research Pipeline       
+     \u2551
+20:37:09 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u255a\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u255d
+20:37:12 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+20:37:12 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 STAGE 1: Data 
+Loading & Feature Engineering
+20:37:12 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 \u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550\u2550\u25
+50\u2550\u2550\u2550\u2550\u2550\u2550\
+u2550\u2550\u2550\u2550\u2550
+20:37:12 \u2502 src.data_loader        
+\u2502 INFO  \u2502 Dataset zip 
+already exists at 
+./data\raw\composites.zip
+20:37:12 \u2502 src.data_loader        
+\u2502 INFO  \u2502 NASA .mat files 
+not found or unparseable. Generating 
+physics-faithful synthetic dataset.
+20:37:18 \u2502 src.data_loader        
+\u2502 INFO  \u2502 Dataset assembled: 
+3196 samples from 
+Synthetic_PhysicsFaithful
+20:37:18 \u2502 src.data_loader        
+\u2502 INFO  \u2502   Specimens: 16 | 
+Layups: 3 | Shape: (3196, 16, 1024)
+20:37:18 \u2502 src.data_loader        
+\u2502 INFO  \u2502   Class 
+distribution: {np.int64(0): 
+np.int64(381), np.int64(1): 
+np.int64(1032), np.int64(2): 
+np.int64(987), np.int64(3): 
+np.int64(572), np.int64(4): 
+np.int64(224)}
+20:37:19 \u2502 CFRP_Pipeline          
+\u2502 INFO  \u2502 Building feature 
+matrix...
+20:37:19 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502 Building feature 
+matrix for 3196 samples...
+20:37:19 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502   Extracting ToF 
+features...
+20:37:39 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502     -> 120 ToF 
+features
+20:37:39 \u2502 src.feature_extraction 
+\u2502 INFO  \u2502   Extracting DWT 
+features (db4, 5 levels)...

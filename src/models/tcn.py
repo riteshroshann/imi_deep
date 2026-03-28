@@ -33,10 +33,10 @@ class CausalConv1d(nn.Module):
                  kernel_size: int, dilation: int = 1):
         super().__init__()
         self.padding = (kernel_size - 1) * dilation
-        self.conv = nn.Conv1d(
+        self.conv = nn.utils.weight_norm(nn.Conv1d(
             in_channels, out_channels, kernel_size,
             dilation=dilation, padding=self.padding,
-        )
+        ))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward pass with causal trimming.
@@ -80,14 +80,10 @@ class TCNResidualBlock(nn.Module):
     ):
         super().__init__()
         self.net = nn.Sequential(
-            nn.utils.weight_norm(
-                CausalConv1d(in_channels, out_channels, kernel_size, dilation)
-            ),
+            CausalConv1d(in_channels, out_channels, kernel_size, dilation),
             nn.GELU(),
             nn.Dropout(dropout),
-            nn.utils.weight_norm(
-                CausalConv1d(out_channels, out_channels, kernel_size, dilation)
-            ),
+            CausalConv1d(out_channels, out_channels, kernel_size, dilation),
             nn.GELU(),
             nn.Dropout(dropout),
         )
