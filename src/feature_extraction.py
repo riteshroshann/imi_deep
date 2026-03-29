@@ -455,6 +455,27 @@ def build_feature_matrix(
     """
     signals = dataset["signals"]
     n_samples = signals.shape[0]
+    
+    # ── TABULAR BYPASS ────────────────────────────────────────────────────────
+    # If the input shape is (N, 17, 16), it's already extracted tabular features.
+    # We must mathematically bypass raw waveform CWT/FFT extractions.
+    if signals.shape[-1] <= 64:  # True for seq_len=16
+        logger.info("  Detected pre-extracted tabular features (shape %s). Bypassing raw wave analysis.", signals.shape)
+        X = signals.reshape(n_samples, -1)
+        # Create generic structured names
+        feature_names = [f"Sensor_{s}_Feat_{f}" for s in range(signals.shape[2]) for f in range(signals.shape[1])]
+        
+        # Append strain if available
+        if include_strain and "strain_data" in dataset:
+            strain = dataset["strain_data"]
+            X = np.concatenate([X, strain], axis=1)
+            feature_names.extend(["strain_x", "strain_y", "strain_xy"])
+            
+        X = np.nan_to_num(X, nan=0.0, posinf=1e6, neginf=-1e6)
+        logger.info("Feature matrix: %s | Names: %d", X.shape, len(feature_names))
+        return X, feature_names
+    # ──────────────────────────────────────────────────────────────────────────
+
     feature_groups = []
     feature_names = []
 

@@ -78,8 +78,8 @@ class BiLSTMAttention(nn.Module):
 
     def __init__(
         self,
-        n_sensors: int = 16,
-        signal_length: int = 1024,
+        n_sensors: int = 17,
+        signal_length: int = 16,
         hidden_dim: int = 128,
         n_layers: int = 2,
         n_classes: int = 5,
@@ -91,16 +91,17 @@ class BiLSTMAttention(nn.Module):
         self.hidden_dim = hidden_dim
         self.n_layers = n_layers
 
-        # Initial temporal feature extraction
+        # Initial temporal feature extraction.
+        # MaxPool(2): seq_len 16 →8 — enough steps for the BiLSTM.
         self.input_conv = nn.Sequential(
-            nn.Conv1d(n_sensors, 32, kernel_size=7, padding=3),
+            nn.Conv1d(n_sensors, 32, kernel_size=3, padding=1),
             nn.BatchNorm1d(32),
             nn.GELU(),
-            nn.MaxPool1d(4),
+            nn.MaxPool1d(2),
         )
 
         # Downsampled length after pooling
-        self.seq_len = signal_length // 4
+        self.seq_len = signal_length // 2
 
         # BiLSTM
         self.lstm = nn.LSTM(

@@ -106,16 +106,17 @@ This work utilizes the benchmark **CFRP Composites Dataset** curated by the [NAS
 |:---|:---|
 | Source | NASA Ames Research Center |
 | Test Protocol | Tension–tension fatigue (R = 0.1) |
-| Sensor Array | 4 × 4 PZT transducer grid (16 channels) |
+| Sensor Array | 4 × 4 PZT transducer grid (16 actuator–sensor paths) |
 | Sampling Rate | 1 MHz |
-| Signal Length | 1,024 samples per acquisition |
-| Raw Data Volume | ~4.6 GB |
-| Specimens | 16 panels across 3 layup families |
-| Processed Samples | 3,196 fatigue snapshots |
-| Engineered Features | 947 per sample |
+| Raw Parquet Rows | 332,388 actuator–sensor path measurements |
+| Specimens | 3 layup configurations (L1, L2, L3) |
+| Processed Samples | ~3,000+ fatigue snapshots |
+| Signal Representation | (N, 17, 16) — 17 statistical features × 16 sensor paths |
+| Engineered Features | 272 direct + strain (tabular bypass mode) |
 | Damage States | 5 classes (pristine → near-failure) |
 
-The pipeline includes automatic download and parsing of raw `.mat` files. When original data is unavailable, a **physics-faithful synthetic generator** produces signals that respect Lamb wave dispersion relations, amplitude attenuation curves, and inter-laminar acoustic decoupling physics.
+Pre-parsed parquets (`pzt_waveforms.parquet`, `strain_data.parquet`) are required.
+The pipeline reads from `parsed_cfrp/` and **does not fall back to synthetic data** — real measurements only.
 
 ---
 

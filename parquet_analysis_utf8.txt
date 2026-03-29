@@ -1,0 +1,66 @@
+﻿Shape: (332388, 34)
+Columns: ['layup', 'specimen', 'cycles', 'load_kips', 'condition', 'boundary_code', 'boundary_label', 'repetition', 'actuator', 'sensor', 'path_id', 'excitation_amplitude', 'excitation_frequency_khz', 'gain', 'sampling_rate_mhz', 'filename', 'amplitude_max', 'amplitude_min', 'amplitude_pp', 'rms', 'energy', 'mean', 'std', 'variance', 'skewness', 'kurtosis', 'zero_crossing_rate', 'dominant_frequency', 'spectral_centroid', 'spectral_bandwidth', 'envelope_max', 'envelope_mean', 'toa_index', 'signal_length']
+
+Sample:
+   layup  specimen  cycles  load_kips condition  boundary_code boundary_label  repetition  actuator  sensor path_id  excitation_amplitude  excitation_frequency_khz  gain  sampling_rate_mhz       filename  amplitude_max  amplitude_min  amplitude_pp           rms        energy          mean  std  variance  skewness  kurtosis  zero_crossing_rate  dominant_frequency  spectral_centroid  spectral_bandwidth  envelope_max  envelope_mean  toa_index  signal_length
+0      1        11       0        0.0  Baseline              0       baseline           0         1       7     1-7                  65.0                     150.0  33.0          1200000.0  L1S11_0_0.mat  -4.937717e-14  -4.937717e-14           0.0  4.937717e-14  2.438105e-27 -4.937717e-14  0.0       0.0       0.0       0.0                 0.0                 0.0                0.0                 0.0  4.937717e-14   4.937717e-14          0              1
+1      1        11       0        0.0  Baseline              0       baseline           0         1       7     1-7                  65.0                     200.0  34.0          1200000.0  L1S11_0_0.mat   2.461139e-14   2.461139e-14           0.0  2.461139e-14  6.057205e-28  2.461139e-14  0.0       0.0       0.0       0.0                 0.0                 0.0                0.0                 0.0  2.461139e-14   2.461139e-14          0              1
+2      1        11       0        0.0  Baseline              0       baseline           0         1       7     1-7                  65.0                     250.0  30.0          1200000.0  L1S11_0_0.mat  -1.981748e-14  -1.981748e-14           0.0  1.981748e-14  3.927326e-28 -1.981748e-14  0.0       0.0       0.0       0.0                 0.0                 0.0                0.0                 0.0  1.981748e-14   1.981748e-14          0              1
+
+Present feature cols: ['amplitude_max', 'amplitude_min', 'amplitude_pp', 'rms', 'energy', 'mean', 'std', 'variance', 'skewness', 'kurtosis', 'zero_crossing_rate', 'dominant_frequency', 'spectral_centroid', 'spectral_bandwidth', 'envelope_max', 'envelope_mean', 'toa_index']
+
+Rows with ANY non-zero feature: 24 / 332388 (0.0%)
+
+Valid rows: 24
+Columns available: ['layup', 'specimen', 'cycles', 'load_kips', 'condition', 'boundary_code', 'boundary_label', 'repetition', 'actuator', 'sensor', 'path_id', 'excitation_amplitude', 'excitation_frequency_khz', 'gain', 'sampling_rate_mhz', 'filename', 'signal_length']
+
+Group keys: ['layup', 'specimen', 'cycles', 'boundary_code', 'repetition']
+Unique layups: [1 2 3]
+Unique specimens: [11 12 18 19 17 20]
+Unique boundary_code: [1 3 2]
+
+Unique (measurement) groups: 24
+Mean paths per group: 1.0
+Paths per group distribution:
+count    24.0
+mean      1.0
+std       0.0
+min       1.0
+25%       1.0
+50%       1.0
+75%       1.0
+max       1.0
+dtype: float64
+
+Cycles range: 0 - 1250000
+Per-specimen cycle range:
+  Specimen 11: 0 - 227000, n_rows=6
+  Specimen 12: 2 - 90000, n_rows=4
+  Specimen 17: 200000 - 225000, n_rows=2
+  Specimen 18: 0 - 600000, n_rows=7
+  Specimen 19: 75000 - 75000, n_rows=1
+  Specimen 20: 1000 - 1250000, n_rows=4
+
+Feature variance (valid rows only):
+amplitude_max         0.0
+amplitude_min         0.0
+amplitude_pp          0.0
+rms                   0.0
+energy                0.0
+mean                  0.0
+std                   0.0
+variance              0.0
+skewness              0.0
+kurtosis              0.0
+zero_crossing_rate    0.0
+dominant_frequency    0.0
+spectral_centroid     0.0
+spectral_bandwidth    0.0
+envelope_max          0.0
+envelope_mean         0.0
+toa_index             0.0
+
+Specimen 11: 6 measurement groups
+  cycles: 0 - 227000
+  Feature matrix shape for one group: (1, 17)
+  Feature values (first row): [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]

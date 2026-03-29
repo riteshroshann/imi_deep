@@ -67,11 +67,10 @@ def _save_metrics(metrics: Dict, path: str):
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def stage_load_data(data_path: str) -> Dict[str, Any]:
-    """Load or generate dataset and extract features."""
+    """Load real NASA dataset and extract features."""
     from src.data_loader import (download_dataset, parse_nasa_composites,
                                   normalize_signals, create_splits)
-    from src.feature_extraction import (build_feature_matrix, compute_damage_index,
-                                         reduce_dimensions)
+    from src.feature_extraction import (build_feature_matrix, reduce_dimensions)
 
     logger.info("═" * 60)
     logger.info("STAGE 1: Data Loading & Feature Engineering")
@@ -84,11 +83,29 @@ def stage_load_data(data_path: str) -> Dict[str, Any]:
     signals_norm, norm_params = normalize_signals(dataset["signals"])
     dataset["signals"] = signals_norm
 
+    sig_shape = dataset["signals"].shape  # (N, C, L)
+    is_tabular = sig_shape[-1] <= 64      # True for real NASA parquet output (L=16)
+    logger.info("Signal shape: %s | Tabular mode: %s", sig_shape, is_tabular)
+
     logger.info("Building feature matrix...")
     features, feat_names = build_feature_matrix(dataset)
 
-    logger.info("Computing Damage Index...")
-    di = compute_damage_index(dataset["signals"], method="correlation")
+    # Damage Index: for tabular data, compute mean absolute deviation per
+    # feature-channel relative to the earliest healthy window — a valid proxy.
+    logger.info("Computing Damage Index proxy...")
+    signals = dataset["signals"]  # (N, C, L)
+    if is_tabular:
+        # DI per sample: L2 norm of deviation of each sample's feature matrix
+        # from the first 10% of samples (baseline).
+        n_base = max(1, int(0.10 * len(signals)))
+        baseline = signals[:n_base].mean(axis=0, keepdims=True)  # (1, C, L)
+        diff = signals - baseline                                 # (N, C, L)
+        di = np.linalg.norm(diff.reshape(len(signals), -1),
+                             axis=1, keepdims=True)               # (N, 1)
+        di = np.tile(di, (1, sig_shape[1]))                      # (N, C) — broadcast
+    else:
+        from src.feature_extraction import compute_damage_index
+        di = compute_damage_index(signals, method="correlation")  # (N, 16)
 
     logger.info("Computing UMAP embeddings...")
     try:
@@ -102,7 +119,7 @@ def stage_load_data(data_path: str) -> Dict[str, Any]:
     processed = {
         "dataset": dataset, "features": features, "feature_names": feat_names,
         "damage_index": di, "umap_embeddings": umap_embed, "splits": splits,
-        "norm_params": norm_params,
+        "norm_params": norm_params, "is_tabular": is_tabular,
     }
     np.savez_compressed("data/processed/features.npz",
                          features=features, di=di, umap=umap_embed)
@@ -298,10 +315,10 @@ def _evaluate_dl_model(model, test_loader, device):
 
 
 def stage_deep_learning(processed: Dict) -> Dict[str, Any]:
-    """Train all deep learning models."""
+    """Train all deep learning models on real NASA tabular signals."""
     import torch
     from src.data_loader import create_splits, create_dataloaders
-    from src.models import CNN1D, BiLSTMAttention, SensorTransformer
+    from src.models import CNN1D, BiLSTMAttention, SensorTransformer, SpatialTemporalAttention
     from src.models.tcn import TemporalConvNet
     from src.uncertainty import comprehensive_rul_metrics
 
@@ -313,17 +330,27 @@ def stage_deep_learning(processed: Dict) -> Dict[str, Any]:
     dataset = processed["dataset"]
     splits = create_splits(dataset, seed=SEED)
     loaders = create_dataloaders(splits, task="rul", batch_size=32)
-    sig_len = dataset["signals"].shape[2]
+
+    # Derive actual tensor dimensions from loaded data
+    n_channels = dataset["signals"].shape[1]   # 17 statistical features
+    seq_len    = dataset["signals"].shape[2]   # 16 sensor paths
+    logger.info("DL input shape: (batch, %d, %d)", n_channels, seq_len)
 
     dl_results = {}
     dl_models = {}
     dl_predictions = {}
 
     model_configs = [
-        ("CNN1D", CNN1D(task="rul", signal_length=sig_len, dropout=0.2)),
-        ("BiLSTM", BiLSTMAttention(task="rul", signal_length=sig_len, dropout=0.3)),
-        ("TCN", TemporalConvNet(task="rul", signal_length=sig_len, dropout=0.2)),
-        ("Transformer", SensorTransformer(task="rul", signal_length=sig_len, dropout=0.1)),
+        ("CNN1D",       CNN1D(
+            task="rul", n_sensors=n_channels, signal_length=seq_len, dropout=0.2)),
+        ("BiLSTM",      BiLSTMAttention(
+            task="rul", n_sensors=n_channels, signal_length=seq_len, dropout=0.3)),
+        ("TCN",         TemporalConvNet(
+            task="rul", n_sensors=n_channels, signal_length=seq_len, dropout=0.2)),
+        ("Transformer", SensorTransformer(
+            task="rul", n_sensors=n_channels, signal_length=seq_len, dropout=0.1)),
+        ("HybridSTA",   SpatialTemporalAttention(
+            task="rul", n_sensors=n_channels, signal_length=seq_len, dropout=0.1)),
     ]
 
     for name, model in model_configs:
@@ -369,18 +396,21 @@ def stage_pinn(processed: Dict) -> Dict[str, Any]:
     device = _set_torch_seed()
     dataset = processed["dataset"]
 
-    # Prepare PINN inputs: [N_norm, DI_features..., layup_one_hot...]
-    di = processed["damage_index"]  # (N, 16)
-    cycles_norm = dataset["rul"]  # Already normalized
+    # Prepare PINN inputs: [life_frac, DI features, layup one-hot]
+    di = processed["damage_index"]      # (N, C) — C=n_channels for tabular data
+    cycles_norm = dataset["rul"]        # already normalized to [0,1]
     life_frac = 1.0 - cycles_norm
 
     layup_oh = np.zeros((len(dataset["layup_id"]), 3), dtype=np.float32)
     for i, lid in enumerate(dataset["layup_id"]):
         layup_oh[i, lid] = 1.0
 
+    # Use the first 16 DI columns at most to keep the PINN compact
+    di_input = di[:, :16] if di.shape[1] >= 16 else di
+
     X_pinn = np.hstack([
         life_frac.reshape(-1, 1),
-        di,
+        di_input,
         layup_oh,
     ]).astype(np.float32)
 

@@ -59,18 +59,17 @@ class CNN1D(nn.Module):
     """1D-CNN for multi-channel Lamb wave signal processing.
 
     Architecture:
-        Input (B, 16, T)
-          → Conv1D(16→32) → BN → GELU → MaxPool(2)
+        Input (B, 17, 16)  — 17 statistical features as channels, 16 sensor paths as sequence
+          → Conv1D(17→32) → BN → GELU → MaxPool(2)
           → Conv1D(32→64) → BN → GELU → MaxPool(2)
           → Conv1D(64→128) → BN → GELU → MaxPool(2)
-          → Conv1D(128→256) → BN → GELU → MaxPool(2)
-          → GlobalAvgPool
+          → Conv1D(128→256) → BN → GELU → AdaptiveAvgPool(1)
           → Dense(256→128) → GELU → Dropout
           → Dense(128→output_dim)
 
     Args:
-        n_sensors: Number of input sensor channels (default: 16).
-        signal_length: Length of input signals.
+        n_sensors: Number of input channels (17 statistical features by default).
+        signal_length: Sequence length (16 sensor paths).
         n_classes: Number of output classes (classification) or 1 (regression).
         task: "classification" or "rul" (regression).
         dropout: Dropout probability.
@@ -79,8 +78,8 @@ class CNN1D(nn.Module):
 
     def __init__(
         self,
-        n_sensors: int = 16,
-        signal_length: int = 1024,
+        n_sensors: int = 17,
+        signal_length: int = 16,
         n_classes: int = 5,
         task: str = "classification",
         dropout: float = 0.2,
@@ -91,12 +90,13 @@ class CNN1D(nn.Module):
         self.mc_dropout = mc_dropout
         self.n_classes = n_classes
 
-        # 4 convolutional blocks with increasing channel depth
+        # 4 convolutional blocks; use kernel_size=3 to keep it small for short sequences.
+        # The last block uses AdaptiveAvgPool so it safely handles any remaining length.
         self.conv_blocks = nn.Sequential(
-            Conv1DBlock(n_sensors, 32, kernel_size=7, pool_size=2, dropout=dropout),
-            Conv1DBlock(32, 64, kernel_size=5, pool_size=2, dropout=dropout),
-            Conv1DBlock(64, 128, kernel_size=5, pool_size=2, dropout=dropout),
-            Conv1DBlock(128, 256, kernel_size=3, pool_size=2, dropout=dropout),
+            Conv1DBlock(n_sensors, 32, kernel_size=3, pool_size=2, dropout=dropout),
+            Conv1DBlock(32, 64, kernel_size=3, pool_size=2, dropout=dropout),
+            Conv1DBlock(64, 128, kernel_size=3, pool_size=0, dropout=dropout),
+            Conv1DBlock(128, 256, kernel_size=3, pool_size=0, dropout=dropout),
         )
 
         # Global Average Pooling

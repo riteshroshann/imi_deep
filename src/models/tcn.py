@@ -138,10 +138,10 @@ class TemporalConvNet(nn.Module):
 
     def __init__(
         self,
-        n_sensors: int = 16,
-        signal_length: int = 1024,
+        n_sensors: int = 17,
+        signal_length: int = 16,
         channels: list = None,
-        kernel_size: int = 3,
+        kernel_size: int = 2,
         n_classes: int = 5,
         task: str = "classification",
         dropout: float = 0.2,

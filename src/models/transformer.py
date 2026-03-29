@@ -146,8 +146,8 @@ class SensorTransformer(nn.Module):
 
     def __init__(
         self,
-        n_sensors: int = 16,
-        signal_length: int = 1024,
+        n_sensors: int = 17,
+        signal_length: int = 16,
         d_model: int = 128,
         n_heads: int = 4,
         d_ff: int = 256,
@@ -162,24 +162,14 @@ class SensorTransformer(nn.Module):
         self.d_model = d_model
         self.n_layers = n_layers
 
-        # Signal embedding: project each sensor's signal to d_model
+        # Signal embedding: project each sensor’s feature vector to d_model.
+        # Input per sensor: (B*n_sensors, signal_length) where signal_length=16.
+        # A direct linear projection is architecturally correct for tabular data.
         self.signal_embed = nn.Sequential(
-            nn.Conv1d(1, 32, kernel_size=7, padding=3),
-            nn.BatchNorm1d(32),
+            nn.Linear(signal_length, d_model),
             nn.GELU(),
-            nn.MaxPool1d(4),
-            nn.Conv1d(32, 64, kernel_size=5, padding=2),
-            nn.BatchNorm1d(64),
-            nn.GELU(),
-            nn.AdaptiveAvgPool1d(d_model // 64),
-            nn.Flatten(),
+            nn.Dropout(dropout),
         )
-
-        # Compute embedding output dim
-        with torch.no_grad():
-            dummy = torch.zeros(1, 1, signal_length)
-            embed_dim = self.signal_embed(dummy).shape[-1]
-        self.embed_proj = nn.Linear(embed_dim, d_model)
 
         # Positional encoding
         self.pos_encoding = SensorPositionalEncoding(n_sensors, d_model)
@@ -242,12 +232,11 @@ class SensorTransformer(nn.Module):
         B, S, T = x.shape
         all_attn = [] if return_attn else None
 
-        # Embed each sensor's signal independently
-        # Reshape: (B*16, 1, T) → embed → (B*16, d_model)
-        x_flat = x.reshape(B * S, 1, T)
-        embeddings = self.signal_embed(x_flat)  # (B*16, embed_dim)
-        embeddings = self.embed_proj(embeddings)  # (B*16, d_model)
-        embeddings = embeddings.reshape(B, S, self.d_model)  # (B, 16, d_model)
+        # Embed each sensor’s feature vector independently.
+        # Reshape: (B, S, T) → (B*S, T) → Linear → (B*S, d_model)
+        x_flat = x.reshape(B * S, T)           # (B*17, 16)
+        embeddings = self.signal_embed(x_flat)  # (B*17, d_model)
+        embeddings = embeddings.reshape(B, S, self.d_model)  # (B, 17, d_model)
 
         # Add positional encoding
         embeddings = self.pos_encoding(embeddings)
