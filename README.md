@@ -63,6 +63,14 @@ We distill **4.6 GB** of raw 16-channel active Lamb wave propagation signals (NA
 
 ---
 
+## Pipeline Architecture
+
+<div align="center">
+  <img src="results/figures/fig00_pipeline_architecture.png" width="95%" alt="Full Pipeline Architecture"/>
+</div>
+
+---
+
 ## Motivation and Problem Statement
 
 Unlike metallic structures where mode-I crack propagation follows well-characterized linear elastic fracture mechanics, CFRP composites exhibit *multi-scale, anisotropic, and non-linear* damage mechanisms:
