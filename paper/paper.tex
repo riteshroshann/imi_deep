@@ -92,11 +92,11 @@ The intersection of prognostics and deep learning for advanced composite infrast
 
 Consequently, Physics-Informed Neural Networks (PINNs) have emerged as the premier mechanism to bridge deep learning generalization limits with established Partial Differential Equations (PDEs) \cite{raissi2019physics}. Recent strides have effectively integrated fundamental linear degradation trajectories \cite{karniadakis2021physics, zhao2024predictive}, yet extrapolating these bounded equations onto high-dimensional discrete wave telemetry via multi-sensor arrays remains technically demanding. Our architecture explicitly fills this physical gap, providing mechanistic regulation for authentic, unaugmented multi-channel wave telemetry. 
 
-\section{Architecture and Mechanistic Formulation}
+\section{Methodology}
 
 The continuous intelligence framework structurally binds autonomous data extraction topologies, physics-regulated prediction paradigms, and Bayesian inverse geometry calibrations. To ensure operational validity, we entirely omit dataset augmentation algorithms that often camouflage empirical limitations.
 
-\subsection{Data Distillation and The Novelty of Authentic Traces}
+\subsection{Data Distillation}
 
 Standard modeling routines frequently interpolate synthetic finite element simulations to inflate training regimes artificially. Conversely, we deploy the unadulterated NASA PCoE CFRP continuous dataset \cite{saxena2008cfrp}. This raw distribution presents authentic signal clipping, stochastic environmental reverberations, and chaotic sensor drop-outs native to realistic aircraft monitoring. The experimental rig comprises $4\times4$ active PZT grids pulsing broad-spectrum acoustics across composite layup regimes subjected to dynamic fatigue cycles. 
 
@@ -125,7 +125,7 @@ Our aggregation produces a $3,196 \times 947$ tensor correlating Time-of-Flight 
     \label{fig:corr}
 \end{figure}
 
-\subsection{Architectural Rationalization: The HybridSTA Framework}
+\subsection{The HybridSTA Framework}
 
 Operating in continuous physical arrays mandates models capable of resolving stochastic sensor failures. To navigate the "stationary" sensor assumption (where pure Data-Driven nodes collapse upon a single channel drop-out), we developed the Hybrid Spatio-Temporal Attention (HybridSTA) network. 
 
@@ -137,7 +137,7 @@ The continuous sequence isolates spatial relations evaluating matrices $Q$, $K$,
 \end{equation}
 Subsequently, reshaping via SE effectively characterises the evolution of the latent damage manifold natively while suppressing aberrant broken PZT values. This yields optimal sequence projections without expanding the mathematical state, allowing accurate sub-millisecond predictions spanning high hardware tolerances.
 
-\subsection{Mechanistic Integration: PINNs and Iterative Bounding}
+\subsection{Mechanistic PINN Integration}
 
 Deep architectures frequently map empirical noise as legitimate signal, calculating non-physical positive derivatives reflecting arbitrary structural stiffness recovery. 
 
@@ -151,22 +151,22 @@ By parameterizing $C$ and $m$ as dynamic constraints tracking raw validation bas
 \mathcal{L}_{total} = \mathcal{L}_{data}(E, \hat{E}) + \lambda \cdot \text{ReLU}\left( \frac{\partial \hat{E}}{\partial N} - E_0^\prime \right)
 \end{equation}
 
-\subsection{Epistemic and Aleatoric Uncertainty Mapping}
+\subsection{Uncertainty Quantification}
 
 Deterministic point-estimates are profoundly insufficient for certified aerospace lifecycle protocols \cite{angelopoulos2021gentle}. We explicitly quantify distribution-free uncertainty limits via Conformal Prediction methodologies separating underlying Aleatoric component noise from systemic Epistemic boundary variance seamlessly. The bounds generated strictly enforce 90\% survival limits preventing undetected critical-failure horizons accurately predicting structural lifetimes comprehensively.
 
-\subsection{Inverse Design via Constrained Bayesian Optimization}
+\subsection{Constrained Bayesian Optimization}
 
 Beyond diagnosis, achieving robust aerospace tolerance necessitates automated material discovery. We constructed a multi-objective Bayesian loop exploring optimal sequences mapping expected life targets dynamically over Gaussian Process limiters estimating optimal values over standard aeronautical orientations: $\theta \in \{0^\circ, \pm 15^\circ, \pm 30^\circ, \pm 45^\circ, 90^\circ\}$.
 
 A scalarized ParEGO Expected Improvement (EI) heuristic guides the framework resolving the highest Pareto value explicitly identifying optimal sequence distributions discovering paramount strength structures rapidly scaling aerospace thresholds efficiently. 
 
 
-\section{Experimental Results and Discussion}
+\section{Experimental Results}
 
 The $3,196$ real, non-augmented NASA CFRP measurement epochs were rigorously split utilizing a continuous $60:20:20$ train/validation/test chronology (eliminating forward-in-time data leakage). 
 
-\subsection{Computational Benchmarks and Prognostics}
+\subsection{Prognostic Benchmarks}
 
 Evaluating trajectory regressions mapping multi-scale dependencies (Table \ref{tab:performance}), the HybridSTA architecture clearly dominates empirical tracking metrics without inflating latency footprints.
 
@@ -194,7 +194,7 @@ BiLSTM \textit{(Attentional)} & 628K & 0.1237 & 0.0798 & 0.812 \\
 
 The empirical results substantiate the theoretical framework directly. The model converges cleanly, dropping parameters by 88\% relative to deep sequential matrices. In inference mapping, this establishes extremely low floating point computation parameters delivering highly optimal $\sim \!2.4\,\text{ms}$ sample latencies seamlessly.
 
-\subsection{Rigorous Ablation Profile}
+\subsection{Ablation Study}
 
 Validating distinct mechanistic additions enforcing accuracy against standard baselines confirms that SE and PINN constraints act synergistically reducing fundamental RUL estimation error bounds. 
 
@@ -240,7 +240,7 @@ The distribution-free bounds (Fig. \ref{fig:calibration}) corroborate the rigid 
     \label{fig:calibration}
 \end{figure}
 
-\subsection{Explainable Dynamics (XAI)}
+\subsection{Explainable Dynamics}
 To deobfuscate deep reasoning protocols mapping signal paths to catastrophic limits, we analyze SHapley Additive exPlanations (SHAP) \cite{lundberg2017unified} alongside geometric Multi-Head Attention boundaries cleanly mapping decisions resolving the black-box algorithms.
 
 \begin{figure}[htbp]
@@ -259,7 +259,7 @@ To deobfuscate deep reasoning protocols mapping signal paths to catastrophic lim
     \caption{XAI representations bridging decisions to structural dynamics. (a) SHAP outlines intense dependence strictly on localized high-frequency signals establishing DWT dependencies securely. (b) The geometric grids unearth accurate isolated spatial path separations defining precise composite panel disruption mappings dynamically reflecting actual physics interactions explicitly tracking internal material states naturally.}
 \end{figure}
 
-\subsection{Bayesian Layup Optimization Findings}
+\subsection{Layup Optimization}
 
 Evaluating constrained structural permutations isolating Pareto performance profiles tracking physical matrices unearths clear optimal boundaries (Fig. \ref{fig:pareto}) resolving peak design configurations accurately evaluating sequential properties balancing expected boundaries consistently establishing flight-path matrices definitively.  
 
@@ -270,9 +270,9 @@ Evaluating constrained structural permutations isolating Pareto performance prof
     \label{fig:pareto}
 \end{figure}
 
-Identifying the global optimum in the combinatorial design space, the surrogate converges explicitly representing $[0^\circ/45^\circ/90^\circ/-45^\circ]_{2s}$ geometry securely mapping continuous extensions elevating structural lifetimes approximately 18–27\%. Thus, discovering the quasi-isotropic baseline natively confirms the analytical Bayesian models correlate absolutely directly aligning mathematical predictions alongside foundational aeronautical principles structurally tracking precise parameters without predefined knowledge inherently reflecting precise properties.
+Identifying the global optimum in the combinatorial design space, the surrogate converges explicitly representing $[0^\circ/45^\circ/90^\circ/-45^\circ]_{2s}$ geometry securely mapping continuous extensions elevating structural lifetimes approximately 18–27\%. Thus, discovering the quasi-isotropic baseline natively confirms the analytical Bayesian models correlate absolutely directly aligning mathematical predictions alongside foundational aeronautical principles structurally tracking precise parameters without predefined knowledge, revealing true material properties.
 
-\section{Discussion and Transferability}
+\section{Discussion}
 
 By dynamically coupling active feature extraction with a Paris Law derivative projection, the HybridSTA architecture transcends rudimentary data-fitting models. The direct implication of applying physical constraints ensures that the parameters govern the fundamental "Law of Fatigue" governing CFRP structures, dramatically improving transferability boundaries. For example, applying this framework toward larger high-performance monitoring environments—such as predicting composite wing-box parameters on commercial aircraft (e.g., Boeing 787)—requires merely mapping local geometric channel vectors without completely restructuring fundamental network operations, given the underlying fracture progression limits maintain mathematical integrity systematically. 
 
