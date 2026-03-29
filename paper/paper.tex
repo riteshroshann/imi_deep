@@ -100,7 +100,7 @@ The continuous intelligence framework structurally binds autonomous data extract
 
 Standard modeling routines frequently interpolate synthetic finite element simulations to inflate training regimes artificially. Conversely, we deploy the unadulterated NASA PCoE CFRP continuous dataset \cite{saxena2008cfrp}. This raw distribution presents authentic signal clipping, stochastic environmental reverberations, and chaotic sensor drop-outs native to realistic aircraft monitoring. The experimental rig comprises $4\times4$ active PZT grids pulsing broad-spectrum acoustics across composite layup regimes subjected to dynamic fatigue cycles. 
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{fig01_raw_signals.png}
     \caption{Amplitude representation of isolated 16-channel Lamb wave arrays across distinct fatigue states. Transitory wave deformations clearly define states of (Top) Initial Microcracking, (Middle) 50\% Operational Lifecycle, and (Bottom) Imminent Matrix Breakdown.}
@@ -109,7 +109,7 @@ Standard modeling routines frequently interpolate synthetic finite element simul
 
 The Discrete Wavelet Transform (DWT) extracts transient energy signatures matching $Db4$ structural symmetries. Rather than analyzing basic time-series magnitudes, the DWT distinctly segregates massive high-frequency kinetic bursts (D1/D2 subbands) intrinsic to micro-filament fractures. 
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{fig02_dwt_scalogram.png}
     \caption{Continuous and Discrete Wavelet Transform (DWT) Scalograms. The bright spectral colorations mapping highest magnitudes natively correlate with catastrophic inter-laminar decoupling events along crucial frequency pathways.}
@@ -118,7 +118,7 @@ The Discrete Wavelet Transform (DWT) extracts transient energy signatures matchi
 
 Our aggregation produces a $3,196 \times 947$ tensor correlating Time-of-Flight matrix signatures against normalized Damage Indices (DI). We validate these features via continuous cross-channel mapping strategies (Fig. \ref{fig:corr}). Unsupervised non-linear dimensionality reduction confirms distinct phase transition manifolds segregating pristine, saturated, and failure-critical states.
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{fig05_correlation_heatmap.png}
     \caption{Spearman cross-correlation heatmap of top engineered features. Strong geometric clustering validates that monotonic physical stages of matrix degradation strongly map across isolated channels dynamically.}
@@ -170,7 +170,7 @@ The $3,196$ real, non-augmented NASA CFRP measurement epochs were rigorously spl
 
 Evaluating trajectory regressions mapping multi-scale dependencies (Table \ref{tab:performance}), the HybridSTA architecture clearly dominates empirical tracking metrics without inflating latency footprints.
 
-\begin{table}[htbp]
+\begin{table}[ht]
 \centering
 \caption{Quantitative Benchmark of Algorithms on Real NASA Data}
 \label{tab:performance}
@@ -198,7 +198,7 @@ The empirical results substantiate the theoretical framework directly. The model
 
 Validating distinct mechanistic additions enforcing accuracy against standard baselines confirms that SE and PINN constraints act synergistically reducing fundamental RUL estimation error bounds. 
 
-\begin{table}[htbp]
+\begin{table}[ht]
 \centering
 \caption{Mechanistic Component Ablation Trajectory Analysis}
 \label{tab:ablation}
@@ -215,7 +215,7 @@ Hybrid Transformer + SE (No PINN boundaries) & 0.1264 & 0.795 \\
 
 The systematic performance isolation actively proves each parameter logic scale significantly increases trajectory resolution securely evaluating accurate matrix degradations tracking RUL paths consistently (Fig \ref{fig:rul}). 
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{fig07_rul_predictions.png}
     \caption{HybridSTA true vs predicted RUL sequences. The empirical Conformal prediction markers cleanly capture the stochastic physical bounds driving accurate operational limit tracking.}
@@ -224,7 +224,7 @@ The systematic performance isolation actively proves each parameter logic scale 
 
 Coupling empirical validation against mathematical bounding via the analytical PINN limit (Fig. \ref{fig:pinn}) guarantees physics consistency enforcing non-recovery bounds reliably defining accurate lifetime markers uniformly tracking continuous degradations explicitly. 
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{fig09_pinn_degradation.png}
     \caption{PINN mathematical interpolation boundaries limiting purely chaotic structural derivations by natively restricting outputs following monotonic kinetic limits systematically protecting extrapolated thresholds.}
@@ -233,7 +233,7 @@ Coupling empirical validation against mathematical bounding via the analytical P
 
 The distribution-free bounds (Fig. \ref{fig:calibration}) corroborate the rigid alignment ensuring statistical calibration matrices perfectly track intended limits avoiding arbitrary failure anomalies precisely targeting 90\% operational survival metrics reliably establishing flight-critical thresholds definitively.
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.85\linewidth]{fig12_calibration.png}
     \caption{Distribution-free Conformal Prediction mapping ensuring accurate risk calibration. The empirical coverage accurately matches the dynamic parameterized confidence intervals across the continuous validation threshold.}
@@ -243,7 +243,7 @@ The distribution-free bounds (Fig. \ref{fig:calibration}) corroborate the rigid 
 \subsection{Explainable Dynamics}
 To deobfuscate deep reasoning protocols mapping signal paths to catastrophic limits, we analyze SHapley Additive exPlanations (SHAP) \cite{lundberg2017unified} alongside geometric Multi-Head Attention boundaries cleanly mapping decisions resolving the black-box algorithms.
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
     \centering
     \begin{subfigure}{0.48\textwidth}
         \includegraphics[width=\linewidth]{fig11_shap_xgboost.png}
@@ -261,16 +261,16 @@ To deobfuscate deep reasoning protocols mapping signal paths to catastrophic lim
 
 \subsection{Layup Optimization}
 
-Evaluating constrained structural permutations isolating Pareto performance profiles tracking physical matrices unearths clear optimal boundaries (Fig. \ref{fig:pareto}) resolving peak design configurations accurately evaluating sequential properties balancing expected boundaries consistently establishing flight-path matrices definitively.  
+Evaluating constrained permutations to isolate Pareto performance profiles unearths clear optimal boundaries (Fig. \ref{fig:pareto}), accurately identifying peak design configurations to establish flight-path matrices definitively.  
 
-\begin{figure}[htbp]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{fig13_pareto_front.png}
-    \caption{Multi-Objective Bayesian Discovery Pareto-Front mapping constrained evaluations checking limits across continuous parameters evaluating Expected Improvements dynamically maintaining physical structural boundary metrics seamlessly.}
+    \caption{Multi-Objective Bayesian Discovery Pareto-Front mapping constrained evaluations checking limits across continuous parameters to dynamically maintain physical structural boundaries seamlessly.}
     \label{fig:pareto}
 \end{figure}
 
-Identifying the global optimum in the combinatorial design space, the surrogate converges explicitly representing $[0^\circ/45^\circ/90^\circ/-45^\circ]_{2s}$ geometry securely mapping continuous extensions elevating structural lifetimes approximately 18–27\%. Thus, discovering the quasi-isotropic baseline natively confirms the analytical Bayesian models correlate absolutely directly aligning mathematical predictions alongside foundational aeronautical principles structurally tracking precise parameters without predefined knowledge, revealing true material properties.
+Identifying the global optimum in the combinatorial design space, the surrogate converges at the $[0^\circ/45^\circ/90^\circ/-45^\circ]_{2s}$ geometry, safely extending structural lifetimes by 18–27\%. Discovering this quasi-isotropic baseline confirms our Bayesian models correctly align with foundational aeronautics, mapping parameters without predefined knowledge to securely discover optimal physical limits.
 
 \section{Discussion}
 
