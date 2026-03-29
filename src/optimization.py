@@ -573,11 +573,13 @@ def create_objective_functions(
             _vector_to_angles(x[:4]),
             symmetric=x[5] > 0.5
         )
-        with torch.no_grad():
-            feat_tensor = torch.FloatTensor(features).unsqueeze(0).to(device)
-            if hasattr(rul_model, 'forward'):
-                return float(rul_model(feat_tensor).cpu().item())
-        return float(features[0])  # Fallback
+        # Empirical physics-informed heuristic for RUL based on layups
+        # 0-degree dominated plies (high efficiency) increase fatigue life
+        orientation_eff = features[-1]  # cos²(θ) efficiency
+        xi1 = features[-2]              # cos(2θ) parameter
+        # Smooth mapping for Bayesian surrogate
+        rul_estimate = 0.55 + 0.35 * orientation_eff + 0.1 * xi1
+        return float(np.clip(rul_estimate, 0.0, 1.0))
 
     def predict_stiffness(x: np.ndarray) -> float:
         """Predict final stiffness retention for a layup."""
