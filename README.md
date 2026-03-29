@@ -51,8 +51,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Generated Figures](#generated-figures)
-- [Citation](#citation)
-- [License](#license)
+- [References](#references)
 
 ---
 
@@ -426,23 +425,7 @@ The pipeline produces **13 publication-quality figures** saved to `results/figur
 
 ---
 
-## Citation
-
-If you use this codebase or methodology in your research, please cite:
-
-```bibtex
-@inproceedings{sahoo2026cfrp,
-  title     = {Physics-Informed Deep Sequence Modeling and Bayesian Optimization 
-               for CFRP Fatigue Prognostics},
-  author    = {Sahoo, Ritesh Roshan and Uppal, Arushi and Sharma, Arnav 
-               and Mahima, Rudru},
-  booktitle = {Introduction to Material Informatics \& Deep Learning Curriculum},
-  school    = {Amrita Vishwa Vidyapeetham, School of AI},
-  year      = {2026}
-}
-```
-
-### References
+## References
 
 1. Raissi, M., Perdikaris, P., & Karniadakis, G.E. (2019). Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations. *Journal of Computational Physics*, 378, 686–707.
 2. Paris, P. & Erdogan, F. (1963). A critical analysis of crack growth laws. *Journal of Basic Engineering*, 85(4), 528–533.
