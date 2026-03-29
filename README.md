@@ -5,7 +5,7 @@
   <p>
     <img src="https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg?style=for-the-badge&logo=pytorch" alt="PyTorch"/>
     <img src="https://img.shields.io/badge/Material_Informatics-State_of_the_Art-blue?style=for-the-badge" alt="SOTA"/>
-    <img src="https://img.shields.io/badge/Status-Publication_Ready-success?style=for-the-badge" alt="Publication Ready"/>
+    <img src="https://img.shields.io/badge/Status-Publication_Ready-success?style=for-the-badge" alt="Status"/>
   </p>
 </div>
 
@@ -69,7 +69,7 @@ Leveraging Gaussian Process surrogates and Expected Improvement (EI) heuristics,
 | **IV** | **Deep Learning Loop** | Evaluating TCN, BiLSTM, and Multi-Head Transformers. |
 | **V** | **PINN Integration** | Embedding Paris Law constraints for monotonic structural decay. |
 | **VI** | **Uncertainty Bounds** | Conformal Prediction establishing 90% survival coverage. |
-| **VII** | **Explainability (XAI)** | Global/Local feature importance via SHAP and Grad-CAM. |
+| **VII** | **Explainability (XAI)** | Global/Local feature importance via SHAP and Grad-CAM 1D. |
 | **VIII** | **Bayesian Search** | Optimal layup configuration discovery via ParEGO. |
 | **IX** | **Visualization** | Generation of 15 publication-grade IEEE vector graphics. |
 
