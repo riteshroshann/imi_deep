@@ -74,7 +74,7 @@ We utilize the benchmark CFRP Composites dataset curated by the NASA Prognostics
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{../results/figures/fig01_raw_signals.png}
+    \includegraphics[width=\linewidth]{fig01_raw_signals.png}
     \caption{Amplitude representation of isolated 16-channel Lamb wave arrays during distinct fatigue states. Temporal shifts indicate emerging physical stiffness losses within the composite matrix.}
     \label{fig:raw_signals}
 \end{figure}
@@ -83,7 +83,7 @@ The dimensionality reduction is handled efficiently by engineering mathematicall
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{../results/figures/fig02_dwt_scalogram.png}
+    \includegraphics[width=\linewidth]{fig02_dwt_scalogram.png}
     \caption{Continuous and Discrete Wavelet Transform (DWT) Scalogram. Frequency concentrations map closely to acoustic crack distortions natively decoupling across varied physical domains.}
     \label{fig:dwt_scalogram}
 \end{figure}
@@ -111,7 +111,7 @@ We extensively evaluate a stack of diverse neural networks structurally modified
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{../results/figures/fig07_rul_predictions.png}
+    \includegraphics[width=\linewidth]{fig07_rul_predictions.png}
     \caption{Remaining Useful Life (RUL) predictive regressions demonstrating the high accuracy ($\text{R}^2 \geq 0.99$) achieved by the Transformer and TCN topologies across sequential degradation horizons.}
     \label{fig:rul}
 \end{figure}
@@ -122,13 +122,13 @@ Visualizing algorithmic decision logic builds mechanical trust. Interpreting fea
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.48\textwidth}
-        \includegraphics[width=\linewidth]{../results/figures/fig11_shap_xgboost.png}
+        \includegraphics[width=\linewidth]{fig11_shap_xgboost.png}
         \caption{SHAP Local Value Explanations}
         \label{fig:shap}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.48\textwidth}
-        \includegraphics[width=\linewidth]{../results/figures/fig10_attention_heatmap.png}
+        \includegraphics[width=\linewidth]{fig10_attention_heatmap.png}
         \caption{Transformer Self-Attention Links}
         \label{fig:attention}
     \end{subfigure}
@@ -152,7 +152,7 @@ By actively penalizing predictions that violate strict monotonic loss metrics vi
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{../results/figures/fig09_pinn_degradation.png}
+    \includegraphics[width=\linewidth]{fig09_pinn_degradation.png}
     \caption{PINN mathematical interpolation. The strict constraint forces monotonic stiffness decays, perfectly shadowing established theoretical limits even during heavily obscured terminal stages.}
     \label{fig:pinn}
 \end{figure}
@@ -162,7 +162,7 @@ Point estimates are insufficient for lifecycle safety criteria. Utilizing distri
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\linewidth]{../results/figures/fig12_calibration.png}
+    \includegraphics[width=0.85\linewidth]{fig12_calibration.png}
     \caption{Conformal Prediction Calibration confirming nominal safety thresholds and reliability curves.}
     \label{fig:calibration}
 \end{figure}
@@ -182,7 +182,7 @@ The heuristic effectively bounds trade-offs between Remaining Useful Life predic
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{../results/figures/fig13_pareto_front.png}
+    \includegraphics[width=\linewidth]{fig13_pareto_front.png}
     \caption{Bayesian Pareto Design Optimization identifying global maxima balances between Expected Lifetime spans and rigid structural metrics.}
     \label{fig:pareto}
 \end{figure}
