@@ -61,17 +61,7 @@ Carbon fiber reinforced polymer (CFRP) composites are critical structural materi
 
 We distill **4.6 GB** of raw 16-channel active Lamb wave propagation signals (NASA PCoE dataset) into a **3,196 × 947** dense feature matrix capturing Time-of-Flight, Daubechies-4 Discrete Wavelet Transform coefficients, Damage Index criteria, and acoustic cross-correlations. We introduce **HybridSTA**, a novel architecture that fuses Squeeze-and-Excitation channel attention with Temporal Aggregation, achieving **R² = 0.827** and RMSE = 0.119 on real NASA specimens — outperforming all single-paradigm baselines including BiLSTM, TCN, and Transformer variants. A Physics-Informed Neural Network embedding the kinetic *Paris Law* crack growth equation (da/dN = C·ΔK<sup>m</sup>) directly into the loss manifold enforces monotonic degradation and reduces PINN stiffness extrapolation RMSE to **0.107**. Distribution-free uncertainty is bounded via Monte Carlo Dropout and Conformal Prediction, yielding rigorous **90% survival coverage intervals**. Multi-objective Bayesian optimization over Gaussian Process surrogates identifies the quasi-isotropic [0/45/90/−45]<sub>2s</sub> layup as the Pareto-optimal configuration, improving expected RUL by **18–27%** while maintaining strict stiffness and strength retention constraints.
 
----
 
-## Pipeline Architecture
-
-<div align="center">
-  <img src="results/figures/fig00_pipeline_architecture.png" width="95%" alt="Full Pipeline Architecture"/>
-</div>
-
----
-
-## Motivation and Problem Statement
 
 Unlike metallic structures where mode-I crack propagation follows well-characterized linear elastic fracture mechanics, CFRP composites exhibit *multi-scale, anisotropic, and non-linear* damage mechanisms:
 
