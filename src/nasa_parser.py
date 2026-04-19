@@ -94,7 +94,13 @@ def _load_mat(fpath: str) -> Dict[str, Any]:
     try:
         if HAS_SCIPY:
             data = sio.loadmat(fpath, squeeze_me=True)
-            return {k: v for k, v in data.items() if not k.startswith("__")}
+            res = {k: v for k, v in data.items() if not k.startswith("__")}
+            if "coupon" in res:
+                c = res["coupon"]
+                if c.dtype.names:
+                    for name in c.dtype.names:
+                        res[name] = c[name].item() if c.ndim == 0 else c[name][0] if c.shape else c[name]
+            return res
     except Exception:
         pass
     if HAS_H5PY:
@@ -173,22 +179,30 @@ def run_parse(
             boundary = 1 if "bc" in fpath.name.lower() or "bound" in dir_name.lower() else 0
 
             # ── PZT signals ───────────────────────────────────────────────────
-            sig_keys = [k for k in data
-                        if any(t in k.lower() for t in ["signal","wave","pzt","data","ch"])]
-            if not sig_keys:
-                continue
-
-            key = sig_keys[0]
-            arr = np.asarray(data[key], dtype=np.float64)
-
-            if arr.ndim == 1:
-                signals = [arr] * min(n_sensors, n_sensors)  # broadcast
-            elif arr.ndim == 2:
-                if arr.shape[1] == n_sensors:
-                    arr = arr.T
-                signals = [arr[i] for i in range(min(arr.shape[0], n_sensors))]
-            else:
-                continue
+            signals = []
+            if "path_data" in data:
+                path_data_arr = data["path_data"]
+                path_data_arr = path_data_arr.flatten() if isinstance(path_data_arr, np.ndarray) else [path_data_arr]
+                for p in path_data_arr:
+                    if hasattr(p, "dtype") and p.dtype.names and "signal_sensor" in p.dtype.names:
+                        sig = p["signal_sensor"]
+                        if isinstance(sig, np.ndarray):
+                            signals.append(sig.astype(np.float64).ravel())
+            
+            if not signals:
+                sig_keys = [k for k in data if any(t in k.lower() for t in ["signal","wave","pzt","data","ch"]) and k != "path_data"]
+                if not sig_keys:
+                    continue
+                key = sig_keys[0]
+                arr = np.asarray(data[key], dtype=np.float64)
+                if arr.ndim == 1:
+                    signals = [arr] * min(n_sensors, n_sensors)
+                elif arr.ndim == 2:
+                    if arr.shape[1] == n_sensors:
+                        arr = arr.T
+                    signals = [arr[i] for i in range(min(arr.shape[0], n_sensors))]
+                else:
+                    continue
 
             # Pad to n_sensors
             while len(signals) < n_sensors:
@@ -211,16 +225,19 @@ def run_parse(
             # ── Strain ────────────────────────────────────────────────────────
             strain_keys = [k for k in data if "strain" in k.lower()]
             for sk in strain_keys:
-                sarr = np.asarray(data[sk], dtype=np.float64).ravel()
-                if len(sarr) >= 3:
-                    strain_rows.append({
-                        "layup": layup, "specimen": specimen_id,
-                        "sample_index": rep,
-                        "strain_x":  float(sarr[0]),
-                        "strain_y":  float(sarr[1]),
-                        "strain_xy": float(sarr[2]),
-                    })
-                    break
+                try:
+                    sarr = np.asarray(data[sk], dtype=np.float64).ravel()
+                    if len(sarr) >= 3:
+                        strain_rows.append({
+                            "layup": layup, "specimen": specimen_id,
+                            "sample_index": rep,
+                            "strain_x":  float(sarr[0]),
+                            "strain_y":  float(sarr[1]),
+                            "strain_xy": float(sarr[2]),
+                        })
+                        break
+                except Exception:
+                    pass
 
             exp_log.append({
                 "specimen_id": specimen_id, "layup": layup,

@@ -134,22 +134,27 @@ class SpatialTemporalAttention(nn.Module):
     ):
         super().__init__()
         self.task          = task
-        self.signal_length = signal_length
+        self.n_sensors     = n_sensors
         self.d_model       = d_model
 
-        # 1. Feature projection
+        # 1. Feature projection (embeds each sensor's full signal into d_model)
+        # Input: (B, n_sensors, seq) -> reshape to (B * n_sensors, 1, seq)
         self.feature_proj = nn.Sequential(
-            nn.Conv1d(n_sensors, d_model, kernel_size=1),
+            nn.Conv1d(1, d_model // 2, kernel_size=15, stride=5, padding=7),
+            nn.BatchNorm1d(d_model // 2),
+            nn.GELU(),
+            nn.Conv1d(d_model // 2, d_model, kernel_size=15, stride=5, padding=7),
             nn.BatchNorm1d(d_model),
             nn.GELU(),
-            nn.Dropout(dropout),
+            nn.AdaptiveAvgPool1d(1),
+            nn.Flatten()
         )
 
-        # 2. SE channel calibration
+        # 2. SE channel calibration (applied to the 16 sensor tokens, each of size d_model)
         self.se = SqueezeExcitation(d_model, reduction=4)
 
-        # 3. Geometric positional encoding
-        self.pos_enc = GeometricPositionalEncoding(d_model, grid_size=4)
+        # 3. Geometric positional encoding (for up to 17 sensors, grid size 5 is safe)
+        self.pos_enc = GeometricPositionalEncoding(d_model, grid_size=5)
 
         # 4. Pre-norm transformer stack
         dp_rates = [drop_path * i / max(n_layers - 1, 1) for i in range(n_layers)]
@@ -193,14 +198,18 @@ class SpatialTemporalAttention(nn.Module):
             RUL predictions (B,) for task='rul',
             class logits (B, n_classes) for task='classification'
         """
-        # 1. Project
-        feat = self.feature_proj(x)          # (B, d_model, S)
-
+        B, C, S = x.shape
+        # 1. Project each sensor's signal to a d_model vector
+        feat = x.view(B * C, 1, S)
+        feat = self.feature_proj(feat)       # (B * C, d_model)
+        feat = feat.view(B, C, self.d_model) # (B, n_sensors, d_model)
+        
         # 2. SE
-        feat = self.se(feat)                 # (B, d_model, S)
+        feat = feat.transpose(1, 2)          # (B, d_model, n_sensors)
+        feat = self.se(feat)                 # (B, d_model, n_sensors)
 
         # 3. Reshape + positional encoding
-        feat = feat.transpose(1, 2)          # (B, S, d_model)
+        feat = feat.transpose(1, 2)          # (B, n_sensors, d_model)
         feat = feat + self.pos_enc(feat.size(1)).to(feat.device)
 
         # 4. Transformer stack

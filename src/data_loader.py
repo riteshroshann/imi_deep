@@ -97,10 +97,10 @@ def _find_parquet_dir(data_path: str) -> Optional[Path]:
 
 
 # ── Public API ─────────────────────────────────────────────────────────────────
-def download_dataset(data_dir: str, force: bool = False) -> str:
+def download_dataset(data_dir: str, force: bool = False, force_raw: bool = False) -> str:
     """
     Locate real NASA CFRP data.  Priority:
-      1. Pre-parsed parquets (any candidate dir)
+      1. Pre-parsed parquets (any candidate dir) (skipped if force_raw=True)
       2. Raw .mat files under data_dir → triggers nasa_parser
       3. Download composites.zip from NASA S3 mirror → parse
 
@@ -108,14 +108,17 @@ def download_dataset(data_dir: str, force: bool = False) -> str:
     Raises RuntimeError if nothing is accessible.
     """
     # Priority 1
-    pqt_dir = _find_parquet_dir(data_dir)
-    if pqt_dir and not force:
-        return str(pqt_dir)
+    if not force_raw:
+        pqt_dir = _find_parquet_dir(data_dir)
+        if pqt_dir and not force:
+            return str(pqt_dir)
 
     # Priority 2 — raw .mat
     raw_path = Path(data_dir)
     mat_files = list(raw_path.rglob("*.mat"))
     if mat_files:
+        if force_raw:
+            return str(raw_path)
         logger.info("Found %d .mat files under %s — running parser", len(mat_files), raw_path)
         out_dir = raw_path.parent / "parsed_cfrp"
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -142,6 +145,8 @@ def download_dataset(data_dir: str, force: bool = False) -> str:
 
     mat_files = list(extract_dir.rglob("*.mat"))
     if mat_files:
+        if force_raw:
+            return str(extract_dir)
         out_dir = raw_path.parent / "parsed_cfrp"
         out_dir.mkdir(parents=True, exist_ok=True)
         try:
@@ -176,6 +181,7 @@ def parse_nasa_composites(
     max_samples_per_specimen: int = 200,
     signal_length: int = 1024,
     seed: int = 42,
+    force_raw: bool = False,
 ) -> Dict[str, Any]:
     """
     Load the NASA CFRP dataset into structured arrays.
@@ -187,10 +193,11 @@ def parse_nasa_composites(
 
     # Try parquet first (in raw_dir or any candidate)
     pqt_dir = None
-    if (raw_path / "pzt_waveforms.parquet").exists():
-        pqt_dir = raw_path
-    else:
-        pqt_dir = _find_parquet_dir(raw_dir)
+    if not force_raw:
+        if (raw_path / "pzt_waveforms.parquet").exists():
+            pqt_dir = raw_path
+        else:
+            pqt_dir = _find_parquet_dir(raw_dir)
 
     if pqt_dir is not None:
         logger.info("Loading real NASA parquets from %s", pqt_dir)
@@ -398,7 +405,13 @@ def _load_mat_file(filepath: str) -> Dict[str, Any]:
     try:
         if HAS_SCIPY:
             data = sio.loadmat(filepath, squeeze_me=True)
-            return {k: v for k, v in data.items() if not k.startswith("__")}
+            res = {k: v for k, v in data.items() if not k.startswith("__")}
+            if "coupon" in res:
+                c = res["coupon"]
+                if c.dtype.names:
+                    for name in c.dtype.names:
+                        res[name] = c[name].item() if c.ndim == 0 else c[name][0] if c.shape else c[name]
+            return res
     except Exception:
         pass
     if HAS_H5PY:
@@ -414,7 +427,22 @@ def _load_mat_file(filepath: str) -> Dict[str, Any]:
 
 
 def _extract_signals(data: Dict, signal_length: int, rng: np.random.Generator) -> Optional[np.ndarray]:
-    signal_keys = [k for k in data if any(t in k.lower() for t in ["signal","wave","pzt","data","ch"])]
+    if "path_data" in data:
+        path_data_arr = data["path_data"]
+        path_data_arr = path_data_arr.flatten() if isinstance(path_data_arr, np.ndarray) else [path_data_arr]
+        signals = []
+        for p in path_data_arr:
+            if hasattr(p, "dtype") and p.dtype.names and "signal_sensor" in p.dtype.names:
+                sig = p["signal_sensor"]
+                if isinstance(sig, np.ndarray):
+                    signals.append(sig.astype(np.float64).ravel())
+        if signals:
+            arr = np.array(signals[:N_SENSORS])
+            if arr.shape[0] < N_SENSORS:
+                arr = np.pad(arr, ((0, N_SENSORS - arr.shape[0]), (0, 0)))
+            return _resize_signals(arr, signal_length)
+
+    signal_keys = [k for k in data if any(t in k.lower() for t in ["signal","wave","pzt","data","ch"]) and k != "path_data"]
     for key in signal_keys:
         try:
             arr = np.asarray(data[key], dtype=np.float64)
@@ -468,9 +496,12 @@ def _extract_cycle_number(filepath: str) -> int:
 
 def _extract_strain(data: Dict, rng: np.random.Generator) -> np.ndarray:
     for key in [k for k in data if "strain" in k.lower()]:
-        arr = np.asarray(data[key], dtype=np.float64).flatten()
-        if len(arr) >= 3:
-            return arr[:3]
+        try:
+            arr = np.asarray(data[key], dtype=np.float64).flatten()
+            if len(arr) >= 3:
+                return arr[:3]
+        except Exception:
+            continue
     return rng.normal(0, 500, 3).astype(np.float64)
 
 

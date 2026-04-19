@@ -33,14 +33,14 @@ def _save_metrics(metrics, path):
     logger.info("Saved → %s", path)
 
 # ── Stage 1: Data ─────────────────────────────────────────────────────────────
-def stage_load_data(data_path):
+def stage_load_data(data_path, force_raw=False):
     from src.data_loader import download_dataset, parse_nasa_composites, normalize_signals, create_splits
     from src.feature_extraction import build_feature_matrix, reduce_dimensions
     logger.info("=" * 60)
     logger.info("STAGE 1: Data Loading & Feature Engineering")
     logger.info("=" * 60)
-    raw_dir = download_dataset(data_path)
-    dataset = parse_nasa_composites(raw_dir, max_samples_per_specimen=200, seed=SEED)
+    raw_dir = download_dataset(data_path, force_raw=force_raw)
+    dataset = parse_nasa_composites(raw_dir, max_samples_per_specimen=200, seed=SEED, force_raw=force_raw, signal_length=2000)
     signals_norm, norm_params = normalize_signals(dataset["signals"])
     dataset["signals"] = signals_norm
     sig_shape = dataset["signals"].shape
@@ -172,12 +172,15 @@ def stage_deep_learning(processed, epochs=80):
     nc = dataset["signals"].shape[1]; sl = dataset["signals"].shape[2]
     logger.info("DL input: (batch, %d, %d)", nc, sl)
     configs = [
-        ("CNN1D",       CNN1D(n_sensors=nc, signal_length=sl, task="rul", dropout=0.2)),
-        ("BiLSTM",      BiLSTMAttention(n_sensors=nc, signal_length=sl, task="rul", dropout=0.3)),
-        ("TCN",         TemporalConvNet(n_sensors=nc, signal_length=sl, task="rul", dropout=0.2)),
-        ("Transformer", SensorTransformer(n_sensors=nc, signal_length=sl, task="rul", dropout=0.1)),
         ("HybridSTA",   SpatialTemporalAttention(n_sensors=nc, signal_length=sl, task="rul", dropout=0.2)),
     ]
+    if sl <= 64:
+        configs = [
+            ("CNN1D",       CNN1D(n_sensors=nc, signal_length=sl, task="rul", dropout=0.2)),
+            ("BiLSTM",      BiLSTMAttention(n_sensors=nc, signal_length=sl, task="rul", dropout=0.3)),
+            ("TCN",         TemporalConvNet(n_sensors=nc, signal_length=sl, task="rul", dropout=0.2)),
+            ("Transformer", SensorTransformer(n_sensors=nc, signal_length=sl, task="rul", dropout=0.1)),
+        ] + configs
     dl_results, dl_models, dl_preds = {}, {}, {}
     for name, model in configs:
         logger.info("Training %s (%d params)...", name, model.num_parameters)
@@ -375,11 +378,12 @@ def main():
     parser.add_argument("--mode", default="full_pipeline",
                         choices=["full_pipeline","baselines","deep_learning","pinn","visualization"])
     parser.add_argument("--epochs", type=int, default=80)
+    parser.add_argument("--force_raw", action="store_true")
     args = parser.parse_args()
     _dirs()
-    logger.info("Mode: %s | Data: %s | Epochs: %d", args.mode, args.data_path, args.epochs)
+    logger.info("Mode: %s | Data: %s | Epochs: %d | Force Raw: %s", args.mode, args.data_path, args.epochs, args.force_raw)
     t0 = time.time()
-    processed = stage_load_data(args.data_path)
+    processed = stage_load_data(args.data_path, force_raw=args.force_raw)
     all_res = {"processed": processed}
     if args.mode in ["baselines","deep_learning","pinn","visualization","full_pipeline"]:
         all_res["baselines"] = stage_baselines(processed)
