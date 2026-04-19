@@ -1,43 +1,43 @@
 # Core Scientific Stack
-numpy==1.26.4
-scipy==1.13.1
-pandas==2.2.2
-scikit-learn==1.5.1
+numpy>=1.24.0
+scipy>=1.10.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
 
 # Deep Learning
-torch==2.3.1
-torchvision==0.18.1
+torch>=2.0.0
+torchvision>=0.15.0
 
 # Gradient Boosting
-xgboost==2.0.3
-lightgbm==4.4.0
+xgboost>=2.0.0
+lightgbm>=4.0.0
 
 # Bayesian Optimization
-optuna==3.6.1
-ax-platform==0.4.0
-gpytorch==1.12
+optuna>=3.5.0
+gpytorch>=1.11
 
 # Explainability
-shap==0.45.1
-captum==0.7.0
+shap>=0.44.0
+captum>=0.7.0
 
 # Visualization
-matplotlib==3.9.1
-seaborn==0.13.2
+matplotlib>=3.7.0
+seaborn>=0.12.0
 
 # Dimensionality Reduction
-umap-learn==0.5.6
+umap-learn>=0.5.4
 
 # Signal Processing
-PyWavelets==1.6.0
+PyWavelets>=1.4.0
 
-# Data Loading
-h5py==3.11.0
+# Data
+h5py>=3.9.0
+pyarrow>=12.0.0
 
-# Uncertainty / Conformal Prediction
-mapie==0.8.6
+# Uncertainty
+mapie>=0.7.0
 
 # Utilities
-tqdm==4.66.4
-requests==2.32.3
-joblib==1.4.2
+tqdm>=4.65.0
+requests>=2.31.0
+joblib>=1.3.0
