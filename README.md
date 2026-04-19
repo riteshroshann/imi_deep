@@ -85,7 +85,7 @@ Contemporary prognostic frameworks ignore this physical reality. Purely data-dri
 
 1. **Authentic Dataset Distillation** — We rigorously bypass synthetic and simulated benchmarks by processing 4.6 GB of raw, empirical tension-tension NASA PCoE sequences. This positions our results on a significantly higher credibility plane than works relying on Finite Element (FE)-augmented data.
 
-2. **HybridSTA Architecture** — A novel Hybrid Spatio-Temporal Attention network whose 4×4 attention geometry directly mirrors the physical PZT sensor grid layout. Squeeze-and-Excitation recalibration enables the model to remain resilient under stochastic sensor masking (dead channels), a critical requirement for real flight hardware.
+2. **HybridSTA-V3 Spatial-Temporal Architecture** — A novel network that directly ingests raw `(16, 2000)` high-frequency PZT sequence tensors without relying on tabular feature extraction. It projects each sensor's time-series into spatial tokens, applying a 4×4 geometric attention mechanism that directly mirrors the physical PZT sensor grid layout. Squeeze-and-Excitation recalibration ensures resilience under stochastic sensor masking.
 
 3. **Mechanistic PINN Integration** — Backpropagation gradients are explicitly regulated by injecting the *Paris Law* crack growth equation via PyTorch autograd. This categorically prohibits non-physical structural recovery predictions and reduces late-stage RUL extrapolation RMSE by **23%** relative to unconstrained baselines.
 
@@ -110,9 +110,9 @@ This work utilizes the **CFRP Composites Dataset** from the [NASA Prognostics Ce
 | Processed Samples | ~3,196 fatigue snapshots |
 | Engineered Features | 947-dimensional dense feature tensor |
 
-> **Key Differentiation:** Unlike the majority of published works in this domain that inflate training regimes with synthetic Finite Element simulations, this pipeline operates exclusively on **authentic, unaugmented, physically observable measurements**. The real-world signal clipping, sensor dropout, and environmental reverberations present in the PCoE traces constitute the ground truth that synthetic methods necessarily obscure.
+> **Key Differentiation:** Unlike the majority of published works in this domain that inflate training regimes with synthetic Finite Element simulations, this pipeline operates exclusively on **authentic, unaugmented, physically observable measurements**. The real-world signal clipping, sensor dropout, and environmental reverberations present in the PCoE traces constitute the ground truth that synthetic methods necessarily obscure. Furthermore, our parser explicitly penetrates the nested `coupon -> path_data` MATLAB structures to extract the raw 2000-length time-series signals directly.
 
-Pre-parsed Parquet files (`data/parsed/pzt_waveforms.parquet`, `data/parsed/strain_data.parquet`) are required for the pipeline. The system does **not fall back to synthetic data** under any execution path.
+Pre-parsed Parquet files (`data/parsed/pzt_waveforms.parquet`, `data/parsed/strain_data.parquet`) are required for standard execution, but the pipeline includes a `--force_raw` bypass to train Deep Learning models directly on the uncompressed waveforms. The system does **not fall back to synthetic data** under any execution path.
 
 ---
 
@@ -414,9 +414,10 @@ python main.py --mode visualization      # All stages through figure generation
 
 | Argument | Default | Description |
 |:---|:---|:---|
-| `--data_path` | `./data` | Path to directory containing parsed Parquet files |
-| `--mode` | `full_pipeline` | Execution scope |
+| `--data_path` | `./data` | Path to directory containing raw `.mat` files or parsed Parquet files |
+| `--mode` | `full_pipeline` | Execution scope (`full_pipeline`, `deep_learning`, `baselines`, `pinn`) |
 | `--epochs` | `80` | Training epochs for all deep learning models |
+| `--force_raw` | `False` | Bypasses the tabular `.parquet` cache to forcefully extract and train DL models directly on the raw `(16, 2000)` sequence tensors |
 
 ### Quick Start with Pre-computed Features
 
