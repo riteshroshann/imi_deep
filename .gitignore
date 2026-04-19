@@ -6,8 +6,10 @@ __pycache__/
 data_dir/
 data/raw/
 data/processed/
-results/
+results/tables/
 outputs/
+# Allow result figures to be committed (so README images render on GitHub)
+!results/figures/
 
 # Jupyter
 .ipynb_checkpoints/
